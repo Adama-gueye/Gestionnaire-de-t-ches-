@@ -75,6 +75,7 @@
 <?php
 session_start();
 $erreur=[];
+$erreur2=[];
 include('bd.php');
 global $conn;
 if (isset($_POST['submit'])) {
@@ -100,16 +101,16 @@ if (isset($_POST['submit'])) {
 if(isset($_POST['inscription'])){
     extract($_POST);
     if(empty($email)|| empty($mdp)|| empty($nom)||empty($confirmation)){
-        $erreur[]= "Tout les champs sont obligatoires";
+        $erreur2[]= "Tout les champs sont obligatoires";
     }elseif($mdp!==$confirmation){
-            $erreur[]= "le mot de passe n'est pas identique";
+            $erreur2[]= "le mot de passe n'est pas identique";
        }elseif(strlen($mdp)<8){
-            $erreur[] = "Le mot de passe doit etre supérieur ou egal a 8 caractéres";
+            $erreur2[] = "Le mot de passe doit etre supérieur ou egal a 8 caractéres";
        }
        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        $erreur[] = "L'adresse e-mail n'est pas valide.";
+        $erreur2[] = "L'adresse e-mail n'est pas valide.";
     }elseif((!(preg_match('/[a-zA-Zéè]$/', $nom)))|| strlen($nom)<5){
-        $erreur[]= "Une erreur s'est produite sur la saisie de votre nom ou de votre prénom";
+        $erreur2[]= "Une erreur s'est produite sur la saisie de votre nom ou de votre prénom";
     }
     else{
         try {
@@ -117,13 +118,14 @@ if(isset($_POST['inscription'])){
             $resul = $conn->exec($req);
             echo "<h3 style='text-align : center; color : green'>Votre compte a été creer avec succes</h3>";
         } catch (PDOException $e) {
-            $erreur[]= "Ce mail existe déja";
+            $erreur2[]= "Ce mail existe déja";
         }
        
     }
 }
 
 echo "<h3 style='text-align : center; color : red'>".implode(". ",$erreur)."</h3>";
+echo "<h3 style='text-align : center; color : red'>".implode(". ",$erreur2)."</h3>";
 ?>
 
 <body>
@@ -133,13 +135,13 @@ echo "<h3 style='text-align : center; color : red'>".implode(". ",$erreur)."</h3
             <h2>Créer un Compte</h2>
             <form method="post">
                 <label for="nom">Nom:</label>
-                <input type="text" id="nom" name="nom">
+                <input type="text" id="nom" name="nom" <?php if($erreur2!=[]){?> value="<?=$_POST["nom"]?>"<?php }?>>
                 <label for="email">Email:</label>
-                <input type="email" id="email" name="email">
+                <input type="email" id="email" name="email" <?php if($erreur2!=[]){?> value="<?=$_POST["email"]?>"<?php }?>>
                 <label for="password">Mot de passe:</label>
-                <input type="password" id="mdp" name="mdp">
+                <input type="password" id="mdp" name="mdp" <?php if($erreur2!=[]){?> value="<?=$_POST["mdp"]?>"<?php }?>>
                 <label for="confirmation">Confirmation:</label>
-                <input type="password" id="confirmation" name="confirmation">
+                <input type="password" id="confirmation" name="confirmation" <?php if($erreur2!=[]){?> value="<?=$_POST["confirmation"]?>"<?php }?>>
                 <button class="form-button" type="submit" name="inscription">S'inscrire</button>
             </form>
         </div>
@@ -150,9 +152,9 @@ echo "<h3 style='text-align : center; color : red'>".implode(". ",$erreur)."</h3
             <h2>Authentification</h2>
             <form method="post">
                 <label for="auth-email">Email:</label>
-                <input type="email" id="auth-email" name="auth_email">
+                <input type="email" id="auth-email" name="auth_email" <?php if($erreur!=[]){?> value="<?=$_POST["auth_email"]?>"<?php }?>>
                 <label for="auth-password">Mot de passe:</label>
-                <input type="password" id="auth-password" name="auth_password">
+                <input type="password" id="auth-password" name="auth_password" <?php if($erreur!=[]){?> value="<?=$_POST["auth_password"]?>"<?php }?>>
                 <button class="form-button" type="submit" name="submit">S'authentifier</button>
             </form>
         </div>

@@ -120,7 +120,6 @@ extract($_POST);
 if (isset($_POST['termine'])) {
     $req = "UPDATE tache SET etat = 'Terminée' WHERE idtache = $id";
     $conn->exec($req);
-    exit;
 }
 
 ?>
