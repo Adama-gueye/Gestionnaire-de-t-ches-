@@ -107,7 +107,7 @@ if(isset($_POST['inscription'])){
        }elseif(strlen($mdp)<8){
             $erreur2[] = "Le mot de passe doit etre supérieur ou egal a 8 caractéres";
        }
-       if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+       elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $erreur2[] = "L'adresse e-mail n'est pas valide.";
     }elseif((!(preg_match('/[a-zA-Zéè]$/', $nom)))|| strlen($nom)<5){
         $erreur2[]= "Une erreur s'est produite sur la saisie de votre nom ou de votre prénom";

@@ -80,6 +80,18 @@
             cursor: pointer;
             margin-right: 10px;
         }
+        .btn3 {
+            background-color: blue;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+        a.btn3 {
+            text-decoration: none;
+        }
 
         a.btn {
             text-decoration: none;
@@ -139,8 +151,9 @@ if (isset($_POST['termine'])) {
             </div>
         </div>
         <div class="dis">
-        <button type="submit" class="btn" name="termine">Marquer comme terminé</button>
-        <button type="submit" name="supprime" class="btn2">Supprimer la tache</button>
+        <button type="submit" class="btn" name="termine">Terminé</button>
+        <button type="submit" name="supprime" class="btn2">Supprimer</button>
+        <a type="submit" href="modif.php?id=<?=$resul['idtache'];?>" name="modif" class="btn3">Modifier</a>
         </div>
         
         </form>
